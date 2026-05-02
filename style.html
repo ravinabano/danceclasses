@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Dance Studio - Find Your Beat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 105, 180, 0.95);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #fff;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-header {
+            background: #ff1493;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .cta-header:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #ff69b4 0%, #ba55d3 50%, #1e90ff 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-top: 70px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><radialGradient id="a" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(255,255,255,0.1)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs><circle fill="url(%23a)" cx="200" cy="200" r="100"/><circle fill="url(%23a)" cx="1000" cy="300" r="80"/><circle fill="url(%23a)" cx="800" cy="600" r="120"/></svg>');
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            position: relative;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-hero {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1.2rem 3rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-hero:hover {
+            background: white;
+            color: #ff1493;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        /* Classes Section */
+        .classes {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+        }
+
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .class-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .class-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .class-image {
+            height: 220px;
+            background: linear-gradient(45deg, #ff69b4, #ba55d3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+            position: relative;
+        }
+
+        .class-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff1493;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .class-info {
+            padding: 2rem;
+        }
+
+        .class-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .class-meta {
+            color: #ff69b4;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .class-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .class-cta {
+            width: 100%;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .class-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4);
+        }
+
+        /* Schedule Section */
+        .schedule {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem;
+        }
+
+        .schedule-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .schedule-item {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .time {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            text-align: center;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            background: #ff69b4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .classes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">💃 Rhythm Dance Studio</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#classes">Classes</a></li>
+                <li><a href="#schedule">Schedule</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#register" class="cta-header">Sign Up Now</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Find Your Rhythm</h1>
+            <p>Join our professional dance classes and unleash your inner dancer. Beginners to advanced - everyone welcome!</p>
+            <a href="#classes" class="cta-hero">Explore Classes</a>
+        </div>
+    </section>
+
+    <!-- Classes Section -->
+    <section class="classes" id="classes">
+        <h2 class="section-title reveal">Our Dance Classes</h2>
+        <p class="section-subtitle reveal">Choose your style and start dancing today</p>
+        <div class="classes-grid">
+            <div class="class-card reveal">
+                <div class="class-image">
+                    <span>👯‍♀️</span>
+                    <div class="class-badge">Beginner</div>
+                </div>
+                <div class="class-info">
+                    <h3 class="class-title">Salsa Dancing</h3>
+                    <div class="class-meta">Mon & Wed • 7:00 PM • $25/class</div>
+                    <p class="class-description">Learn the passionate Latin dance that's sweeping the world. Partner work included!</p>
+                    <button class="class-cta" onclick="bookClass('Salsa')">Book Now</button>
+                </div>
+            </div>
+            <div class="class-card reveal">
+                <div class="class-image">
+                    <span>🕺</span>
+                    <div class="class-badge">All Levels</div>
+                </div>
+                <div class="class-info">
+                    <h3 class="class-title">Hip Hop</h3>
+                    <div class="class-meta">Tue & Thu • 6:30 PM • $22/class</div>
+                    <p class="class-description">Street dance vibes with popping, locking, and freestyle. Bring your energy!</p>
+                    <button class="class-cta" onclick="bookClass('Hip Hop')">Book Now</button>
+                </div>
+            </div>
+            <div class="class-card reveal">
+                <div class="class-image">
+                    <span>💃</span>
+                    <div class="class-badge">Intermediate</div>
+                </div>
+                <div class="class-info">
+                    <h3 class="class-title">Ballet</h3>
+                    <div class="class-meta">Wed & Fri • 5:00 PM • $28/class</div>
+                    <p class="class-description">Classical technique with contemporary flair. Build strength and grace.</p>
+                    <button class="class-cta" onclick="bookClass('Ballet')">Book Now</button>
+                </div>
+            </div>
+            <div class="class-card reveal">
+                <div class="class-image">
+                    <span>🔥</span>
+                    <div class="class-badge">Advanced</div>
+                </div>
+                <div class="class-info">
+                    <h3 class="class-title">Contemporary</h3>
+                    <div class="class-meta">Thu & Sat • 8:00 PM • $30/class</div>
+                    <p class="class-description">Expressive movement and storytelling through modern dance techniques.</p>
+                    <button class="class-cta" onclick="bookClass('Contemporary')">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section class="schedule" id="schedule">
+        <div class="container">
+            <h2 class="section-title">Weekly Schedule</h2>
+            <p class="section-subtitle">Consistent classes to fit your lifestyle</p>
+            <div class="schedule-grid">
+                <div class="schedule-item">
+                    <div class="time">Monday</div>
+                    <div>6:00 PM - Zumba</div>
+                    <div>7:00 PM - Salsa</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">Tuesday</div>
+                    <div>6:30 PM - Hip Hop</div>
+                    <div>8:00 PM - Bachata</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">Wednesday</div>
+                    <div>5:00 PM - Ballet</div>
+                    <div>7:00 PM - Salsa</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="time">Thursday</div>
+                    <div>6:30 PM - Hip Hop</div>
+                    <div>8:00 PM - Contemporary</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <h2 class="section-title reveal">What Our Students Say</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial reveal">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Best dance studio ever! Instructors are amazing and classes are so fun!"</p>
+                <div style="margin-top: 1rem; font-weight: bold;">Sarah K.</div>
+            </div>
+            <div class="testimonial reveal">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"I went from zero rhythm to dancing confidently in just 2 months!"</p>
+                <div style="margin-top: 1rem; font-weight: bold;">Mike R.</div>
+            </div>
+            <div class="testimonial reveal">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Professional instruction at affordable prices. Highly recommend!"</p>
+                <div style="margin-top: 1rem; font-weight: bold;">Lisa M.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div>
+                <h3>💃 Rhythm Dance Studio</h3>
+                <p>123 Dance Street<br>City, ST 12345<br>(555) 123-4567</p>
+            </div>
+            <div>
+                <h4>Classes</h4>
+                <p>Salsa • Hip Hop<br>Ballet • Contemporary<br>Zumba • Bachata</p>
+            </div>
+            <div>
+                <h4>Hours</h4>
+                <p>Mon-Fri: 5PM-10PM<br>Sat: 10AM-8PM<br>Sun: Closed</p>
+            </div>
+        </div>
+        <div class="social-links">
+            <a href="#">📘</a>
+            <a href="#">📷</a>
+            <a href="#">📱</a>
+            <a href="#">🐦</a>
+        </div>
+        <p>&copy; 2024 Rhythm Dance Studio. Dance like nobody's watching.</p>
+    </footer>
+
+    <script>
+        // Book class function
+        function bookClass(className) {
+            // Create booking notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #ff69b4, #ff1493);
+                color: white;
+                padding: 1.5rem 2rem;
+                border-radius: 15px;
+                box-shadow: 0 15px 35px rgba(255,105,180,0.4);
+                z-index: 2000;
+                font-weight: bold;
+                animation: bounceIn 0.5s ease;
+            `;
+            notification.innerHTML = `🎉 ${className} class booked!<br>Check your email for confirmation.`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 105, 180, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 105, 180, 0.95)';
+            }
+        });
+
+        // Dance animation on hero
+        setInterval(() => {
+            const heroEmojis = ['💃', '🕺', '👯‍♀️', '👯', '🪩'];
+            const randomEmoji = heroEmojis[Math.floor(Math.random() * heroEmojis.length)];
+            createFloatingEmoji(randomEmoji);
+        }, 3000);
+
+        function createFloatingEmoji(emoji) {
+            const emojiEl = document.createElement('div');
+            emojiEl.textContent = emoji;
+            emojiEl.style.cssText = `
+                position: fixed;
+                font-size: 2rem;
+                pointer-events: none;
+                z-index: 1000;
+                animation: floatUp 4s ease-out forwards;
+                left: ${Math.random() * 90 + 5}vw;
+                top: 90vh;
+            `;
+            document.body.appendChild(emojiEl);
+            
+            setTimeout(() => emojiEl.remove(), 4000);
+        }
+    </script>
+</body>
+</html>
